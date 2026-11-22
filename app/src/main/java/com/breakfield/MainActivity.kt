@@ -238,7 +238,7 @@ class MainActivity : Activity() {
         modeButtons.clear()
         val portrait = isPortraitUi()
         root = vertical().apply {
-            setBackgroundColor(background)
+            setBackgroundColor(this@MainActivity.background)
             pad(this, if (portrait) 6 else 10)
         }
 
@@ -281,7 +281,7 @@ class MainActivity : Activity() {
             setPadding(dp(6),dp(5),dp(6),dp(5))
         }
         val scroll = ScrollView(this).apply {
-            fillViewport = true
+            isFillViewport = true
             isVerticalScrollBarEnabled = true
             clipToPadding = false
         }
