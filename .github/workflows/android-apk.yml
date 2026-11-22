@@ -3,6 +3,7 @@ on:
   push:
     branches: [ main, master, breakfield-android-v0.1 ]
   workflow_dispatch:
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -14,9 +15,12 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
-      - uses: android-actions/setup-android@v3
-      - name: Install Android SDK platform
-        run: sdkmanager "platforms;android-35" "build-tools;35.0.0"
+      - name: Install Android SDK components
+        shell: bash
+        run: |
+          SDKMANAGER="$(find "$ANDROID_HOME/cmdline-tools" -type f -path "*/bin/sdkmanager" | sort -V | tail -n 1)"
+          test -x "$SDKMANAGER"
+          "$SDKMANAGER" --install "platforms;android-35" "build-tools;35.0.0"
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
         with:
